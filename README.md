@@ -23,3 +23,37 @@ Things you may want to cover:
 
 * ...
 
+
+ +-------------+     +-------------------+   
+    |   user      |     |      shohin       | 
+    +-------------+     +-------------------+ 
+    | userID (PK) |     | shohinID (PK)    | 
+    | nickname    |     | image            |
+    | email       |     | name             |
+    | password    |     | sethumei         | 
+    | name        |     | category         | 
+    | zenkakuname |     | jotai            | 
+    | birthday    |     | hutan            | 
+    |             |     | region           |
+    |             |     | nissu            | 
+    |             |     | price            |
+    |             |     | seller (FK)      
+    +-------------+     +-------------------+ 
+
+                           |
+                           |
+                           |
+    -----------------------
+    |
+    |
+    |
+    |
+    v
+    +-------------+
+    |   konyu     |
+    +-------------+
+    | konyuID (PK)|
+    | who         |
+    | what        |
+    | buyer       |
+    +-------------+

@@ -23,37 +23,54 @@ Things you may want to cover:
 
 * ...
 
+# テーブル設計
 
- +-------------+     +-------------------+   
-    |   user      |     |      shohin       | 
-    +-------------+     +-------------------+ 
-    | userID (PK) |     | shohinID (PK)    | 
-    | nickname    |     | image            |
-    | email       |     | name             |
-    | password    |     | sethumei         | 
-    | name        |     | category         | 
-    | zenkakuname |     | jotai            | 
-    | birthday    |     | hutan            | 
-    |             |     | region           |
-    |             |     | nissu            | 
-    |             |     | price            |
-    |             |     | seller (FK)      
-    +-------------+     +-------------------+ 
+#userテーブル
 
-                           |
-                           |
-                           |
-    -----------------------
-    |
-    |
-    |
-    |
-    v
-    +-------------+
-    |   konyu     |
-    +-------------+
-    | konyuID (PK)|
-    | who         |
-    | what        |
-    | buyer       |
-    +-------------+
+| Column                 | Type   | Options     |
+| ------------------     | ------ | ----------- |
+| nickname               | string | null: false |
+| email                  | string | null: false, unique: true |
+| password               | string | null: false |
+| lastname               | string | null: false |
+| firstname              | string | null: false |
+| lastname(kana)         | string | null: false |
+| firstname(kana)        | string | null: false |
+
+
+#Association
+
+- has_many :shohin
+
+#shohinテーブル
+
+| Column           | Type   | Options     |
+| ------           | ------ | ----------- |
+| name             | string | null: false |
+| sethumei         | string | null: false |
+| category         | string | null: false |
+| jotai            | string | null: false |
+| hutan            | string | null: false |
+| region           | string | null: false |
+| nissu            | string | null: false |
+| price            | string | null: false |
+| user             | string | null: false |
+
+#Association
+
+- belongs_to :user
+
+
+#konyuテーブル
+
+| Column   | Type       | Options      |
+| ------   | ---------- | -------------|
+| user     | references | null: false, |
+| shohin   | references | null: false, |
+| assress  | string     | null: false  |
+
+#Association
+
+t.references :user
+t.references :shohin
+

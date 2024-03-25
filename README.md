@@ -36,7 +36,7 @@ Things you may want to cover:
 | firstname                       | string | null: false |
 | lastname_kana                   | string | null: false |
 | firstname_kana                  | string | null: false |
-| birthday                        | string | null: false |
+| birthday                        | date   | null: false |
 
 #Association
 
@@ -51,43 +51,44 @@ include ActiveHash::Associations
 | ------            | -----       | ----------- |
 | name              | string      | null: false |
 | info              | text        | null: false |
-| category          | integer     | null: false |
-| situation         | integer     | null: false |
-| cost              | integer     | null: false |
-| region            | integer     | null: false |
-| days              | integer     | null: false |
-| price             | string      | null: false |
-| user              | references  | foreign_key: true |
+| category_id       | integer     | null: false |
+| situation_id      | integer     | null: false |
+| cost_id           | integer     | null: false |
+| region_id         | integer     | null: false |
+| delivery_day_id   | integer     | null: false |
+| price             | integer     | null: false |
+| user              | references  | foreign_key: true, null: false |
 
 #Association
    extend ActiveHash::Associations::ActiveRecordExtensions
-  belongs_to :users
+  belongs_to :user
 
-  has_many buys
+  has_one :buy
 
 
 #buysテーブル
 
 | Column   | Type       | Options      |
 | ------   | ---------- | -------------|
-| user     | references | null: false, |
-| items    | references | null: false, |
-| address  | string     | null: false  |
-| users:id
-| items:id
+| user     | references | null: false, foreign_key: true |
+| item     | references | null: false, foreign_key: true |
 
 #Association
 
- belongs_to :items
-t.references :users
+ belongs_to :item
+ belongs_to :user
+ has_one :address
 
-#addressテーブル
+#addressesテーブル
 
 | Column                           | Type   | Options     |
+| ------                           | -------| -------------|
 | number                           | string | null: false |
-| metropolis                       | string | null: false |
+| region_id                        | integer | null: false |
 | city                             | string | null: false |
 | street_address                   | string | null: false |
-| build                            | string | null: false |
+| build                            | string |             |
 | tel_number                       | string | null: false |
-| buys:id
+| buy                              | references  | foreign_key: true, null: false |
+
+belongs_to :buy

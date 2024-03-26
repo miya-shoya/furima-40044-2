@@ -40,7 +40,7 @@ Things you may want to cover:
 
 #Association
 
-include ActiveHash::Associations
+
 - has_many :items
 
   has_many :buys
@@ -60,7 +60,7 @@ include ActiveHash::Associations
 | user              | references  | foreign_key: true, null: false |
 
 #Association
-   extend ActiveHash::Associations::ActiveRecordExtensions
+  
   belongs_to :user
 
   has_one :buy

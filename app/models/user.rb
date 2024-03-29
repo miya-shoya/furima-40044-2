@@ -10,7 +10,6 @@ class User < ApplicationRecord
   PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
   PASSWORD_REGEX_ZENKAKU = /\A[ぁ-んァ-ヶ一-龥々ー]+\z/
   PASSWORD_REGEX_KATAKANA = /\A[ァ-ヶー－]+\z/.freeze
-  validates :password, format: { with: /\A[\p{ascii}&&[^ ]]+\z/, message: 'は半角英数字で入力してください' }
 
     validates :nickname, presence: true
     validates :password, format: { with: PASSWORD_REGEX }

@@ -65,6 +65,7 @@ describe User do
       @user.valid?
       expect(@user.errors.full_messages).to include('Password is invalid')
     end
+
     it 'passwordが存在してもpassword_confirmationが空では登録できない' do
       @user.password_confirmation = ''
       @user.valid?

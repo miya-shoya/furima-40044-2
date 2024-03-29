@@ -66,6 +66,13 @@ describe User do
       expect(@user.errors.full_messages).to include('Password is invalid')
     end
 
+    it '全角を含むパスワードでは登録できない' do
+      @user.password = 'ＡＡＡＡＡＡ'
+      @user.password_confirmation = @user.password
+      @user.valid?
+      expect(@user.errors.full_messages).to include('Password is invalid')
+    end
+
     it 'passwordが存在してもpassword_confirmationが空では登録できない' do
       @user.password_confirmation = ''
       @user.valid?
@@ -80,22 +87,22 @@ describe User do
     it 'firstnameが存在しなければ登録できない' do
       @user.firstname = ''
       @user.valid?
-      expect(@user.errors.full_messages).to include("Firstname can't be blank")
+      expect(@user.errors.full_messages).to include("Firstname is invalid")
     end
     it 'lastnameが存在しなければ登録できない' do
       @user.lastname = ''
       @user.valid?
-      expect(@user.errors.full_messages).to include("Lastname can't be blank")
+      expect(@user.errors.full_messages).to include("Lastname is invalid")
     end
     it 'firstname_kanaが存在しなければ登録できない' do
       @user.firstname_kana = ''
       @user.valid?
-      expect(@user.errors.full_messages).to include("Firstname kana can't be blank")
+      expect(@user.errors.full_messages).to include("Firstname kana is invalid")
     end
-    it 'lastname_katakanaが存在しなければ登録できない' do
+    it 'lastname_kataが存在しなければ登録できない' do
       @user.lastname_kana = ''
       @user.valid?
-      expect(@user.errors.full_messages).to include("Lastname kana can't be blank")
+      expect(@user.errors.full_messages).to include("Lastname kana is invalid")
     end
     it 'firstnameが全角入力でなければ登録できない' do
       @user.firstname = 'aaa'

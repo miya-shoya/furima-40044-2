@@ -6,7 +6,7 @@ class Item < ApplicationRecord
   belongs_to_active_hash :region
   belongs_to_active_hash :delivery_day
   validates :name, :image, :price, :info, :category_id, :situation_id, :cost_id, :region_id, :delivery_day_id, presence: true
-  validates :price, numericality: { only_integer: true, less_than: 9_999_999, greater_than: 300 }
+  validates :price, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 }
 
   with_options numericality: { other_than: 0 } do
     validates :category_id

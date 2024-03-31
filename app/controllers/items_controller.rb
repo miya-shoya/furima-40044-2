@@ -3,9 +3,9 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:edit, :show, :update, :destroy]
 
 
-  def index
-    @items = Item.order('created_at DESC')
-  end
+  #def index
+    #@items = Item.order('created_at DESC')
+  #end
 
   def new
     @item = Item.new
@@ -16,36 +16,36 @@ class ItemsController < ApplicationController
     if @item.save
       redirect_to root_path
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
   def show
   end
 
-  def edit
-  end
+  #def edit
+  #end
 
-  def update
-    if @item.update(item_params)
-      redirect_to item_path
-    else
+  #def update
+   # if @item.update(item_params)
+     # redirect_to item_path
+    #else
       render :edit
     end
   end
 
-  def destroy
-    if @item.destroy
-      redirect_to root_path
-    else
-      render :show
-    end
-  end
+  #def destroy
+   # if @item.destroy
+    #  redirect_to root_path
+    #else
+     # render :show
+    #end
+  #end
 
   private
 
   def item_params
-    params.require(:item).permit(:name, :image, :price, :info, :user_id, :category_id, :situation_id, :cost_id, :region_id, :delivery_day_id).merge(user_id: current_user.id)
+    params.require(:item).permit(:name, :image, :price, :info,  :category_id, :situation_id, :cost_id, :region_id, :delivery_day_id).merge(user_id: current_user.id)
   end
 
   def set_item

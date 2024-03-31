@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
 
 
   def index
-    @items = Item.buys('created_at DESC')
+    @items = Item.all
   end
 
   def new

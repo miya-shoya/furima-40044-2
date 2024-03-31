@@ -30,9 +30,9 @@ class ItemsController < ApplicationController
    # if @item.update(item_params)
      # redirect_to item_path
     #else
-      render :edit
-    end
-  end
+      #render :edit
+   # end
+  #end
 
   #def destroy
    # if @item.destroy

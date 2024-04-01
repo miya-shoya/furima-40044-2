@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new]
-  before_action :set_item, only: [:edit, :show, :update, :destroy]
+  before_action :set_item, only: [:edit, :show, :update] # , :destroy]
 
 
   def index
@@ -23,16 +23,16 @@ class ItemsController < ApplicationController
   def show
   end
 
-  #def edit
-  #end
+  def edit
+  end
 
-  #def update
-   # if @item.update(item_params)
-     # redirect_to item_path
-    #else
-      #render :edit
-   # end
-  #end
+  def update
+    if @item.update(item_params)
+      redirect_to item_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
 
   #def destroy
    # if @item.destroy
@@ -45,7 +45,7 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:name, :image, :price, :info,  :category_id, :situation_id, :cost_id, :region_id, :delivery_day_id).merge(user_id: current_user.id)
+    params.require(:item).permit(:name, :image, :price, :info, :category_id, :situation_id, :cost_id, :region_id, :delivery_day_id).merge(user_id: current_user.id)
   end
 
   def set_item

@@ -1,6 +1,8 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new]
   before_action :set_item, only: [:edit, :show, :update] # , :destroy]
+  before_action :authenticate_user!, {only: [:edit, :update]}
+  before_action :ensure_correct_user, {only: [:edit, :update]}
 
 
   def index
@@ -31,6 +33,14 @@ class ItemsController < ApplicationController
       redirect_to item_path
     else
       render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def ensure_correct_user
+    @item = Item.find(params[:id])
+    if @item.user_id != current_user.id
+      flash[:notice] = "You do not have permission to edit this item."
+      redirect_to root_path
     end
   end
 

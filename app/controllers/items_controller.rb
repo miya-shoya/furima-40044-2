@@ -1,8 +1,7 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new]
-  before_action :set_item, only: [:edit, :show, :update] # , :destroy]
-  before_action :authenticate_user!, {only: [:edit, :update]}
-  before_action :ensure_correct_user, {only: [:edit, :update]}
+  before_action :set_item, only: [:edit, :show, :update, :destroy]
+  before_action :authenticate_user!, only: [:edit, :update, :new, :destroy]
+  before_action :ensure_correct_user, only: [:edit, :update, :destroy]
 
 
   def index
@@ -36,21 +35,14 @@ class ItemsController < ApplicationController
     end
   end
 
-  def ensure_correct_user
-    @item = Item.find(params[:id])
-    if @item.user_id != current_user.id
-      flash[:notice] = "You do not have permission to edit this item."
+
+  def destroy
+    if @item.destroy
       redirect_to root_path
+    else
+      render :show
     end
   end
-
-  #def destroy
-   # if @item.destroy
-    #  redirect_to root_path
-    #else
-     # render :show
-    #end
-  #end
 
   private
 
@@ -62,4 +54,11 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
+  def ensure_correct_user
+    @item = Item.find(params[:id])
+    if @item.user_id != current_user.id
+      flash[:notice] = "You do not have permission to edit this item."
+      redirect_to root_path
+    end
+  end
 end

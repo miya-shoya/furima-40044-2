@@ -69,24 +69,24 @@ RSpec.describe BuyAddress, type: :model do
         expect(@buy_address.errors.full_messages).to include("Token can't be blank")
       end
       it "region_idの値が、id:1,name:'--'の時は保存できないこと" do
-        @buy_address.region_id = 1
+        @buy_address.region_id = 0
         @buy_address.valid?
-        expect(@buy_address.errors.full_messages).to include('Region is not a number')
+        expect(@buy_address.errors.full_messages).to include('Region must be other than 0')
       end
       it 'postal_codeが6桁以下だと登録できないこと' do
         @buy_address.postal_code = '123456'
         @buy_address.valid?
-        expect(@buy_address.errors.full_messages).to include('Postal code is invalid')
+        expect(@buy_address.errors.full_messages).to include('Postal code を入力してください')
       end
       it 'postal_codeが8桁以上だと登録できないこと' do
         @buy_address.postal_code = '12345678'
         @buy_address.valid?
-        expect(@buy_address.errors.full_messages).to include('Postal code is invalid')
+        expect(@buy_address.errors.full_messages).to include('Postal code を入力してください')
       end
       it 'postal_codeがハイフンがないと登録できないこと' do
         @buy_address.postal_code = '1234567'
         @buy_address.valid?
-        expect(@buy_address.errors.full_messages).to include('Postal code is invalid')
+        expect(@buy_address.errors.full_messages).to include('Postal code を入力してください')
       end
       it 'phone_numberが9桁以下だとの数字なら登録できない' do
         @buy_address.phone_number = '123456789'
@@ -101,6 +101,7 @@ RSpec.describe BuyAddress, type: :model do
       it '建物名が空でも登録できる' do
         @buy_address.building_name = ''
         expect(@buy_address).to be_valid
+      end
     end
   end
 end

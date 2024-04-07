@@ -83,12 +83,12 @@ Things you may want to cover:
 
 | Column                           | Type   | Options     |
 | ------                           | -------| -------------|
-| number                           | string | null: false |
+| postal_code                      | string | null: false |
 | region_id                        | integer | null: false |
 | city                             | string | null: false |
-| street_address                   | string | null: false |
-| build                            | string |             |
-| tel_number                       | string | null: false |
+| house_number                     | string | null: false |
+| building_number                  | string |             |
+| phone_number                     | string | null: false |
 | buy                              | references  | foreign_key: true, null: false |
 
 belongs_to :buy

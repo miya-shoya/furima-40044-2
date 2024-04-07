@@ -44,6 +44,13 @@ class ItemsController < ApplicationController
     end
   end
 
+  def ensure_correct_user
+    if @item.user_id != current_user.id || !@item.buy.nil?
+      flash[:notice] = "You do not have permission to edit this item."
+      redirect_to root_path
+    end
+  end
+
   private
 
   def item_params
@@ -52,13 +59,5 @@ class ItemsController < ApplicationController
 
   def set_item
     @item = Item.find(params[:id])
-  end
-
-  def ensure_correct_user
-    @item = Item.find(params[:id])
-    if @item.user_id != current_user.id
-      flash[:notice] = "You do not have permission to edit this item."
-      redirect_to root_path
-    end
   end
 end

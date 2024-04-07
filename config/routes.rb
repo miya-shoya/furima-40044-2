@@ -4,6 +4,5 @@ Rails.application.routes.draw do
   resources :items, only:[:index,:new,:create,:show,:edit,:update,:destroy] do
   resources :buys, only:[:index,:create] 
   end
-    resources :addresses, only:[:new, :create]
 end
 

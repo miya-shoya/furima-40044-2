@@ -1,21 +1,24 @@
 class BuysController < ApplicationController
+  before_action :set_item, only: [:index, :create]
 
-    def index
-      gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
-      @buy_address = BuyAddress.new
-      @item = Item.find(params[:item_id])
-      if user_signed_in?
+  def index
+    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+    @buy_address = BuyAddress.new
+    if user_signed_in? && @item.buy.nil?
+      if current_user.id != @item.user_id
         @buy = @item.buy
         @user = current_user
       else
         redirect_to root_path
       end
+    else
+      redirect_to root_path
     end
+  end
 
 
     def create
       gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
-      @item = Item.find(params[:item_id])
       @buy_address = BuyAddress.new(buy_params)
       if @buy_address.valid?
         pay_item
@@ -27,6 +30,10 @@ class BuysController < ApplicationController
   end
 
     private
+
+    def set_item
+      @item = Item.find(params[:item_id])
+    end
 
     def buy_params
       params.require(:buy_address).permit(:postal_code, :region_id, :city, :house_number, :building_name, :phone_number ).merge(user_id: current_user.id, item_id: params[:item_id],token: params[:token])

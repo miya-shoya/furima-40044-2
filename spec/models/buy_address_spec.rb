@@ -3,9 +3,10 @@ require 'rails_helper'
 RSpec.describe BuyAddress, type: :model do
   describe '商品購入機能' do
     before do
-      @buy_address = FactoryBot.build(:buy_address)
-      @user = FactoryBot.build(:user)
-      @item = FactoryBot.build(:item)
+      @user = FactoryBot.create(:user)
+      @item = FactoryBot.create(:item)
+      @buy_address = FactoryBot.build(:buy_address, user_id: @user.id, item_id: @item.id)
+      sleep(0.1)
     end
 
     context '商品購入がうまくいくとき' do
@@ -68,7 +69,7 @@ RSpec.describe BuyAddress, type: :model do
         expect(@buy_address.errors.full_messages).to include("Token can't be blank")
       end
       it "region_idの値が、id:1,name:'--'の時は保存できないこと" do
-        @buy_address.region_id = [1]
+        @buy_address.region_id = 1
         @buy_address.valid?
         expect(@buy_address.errors.full_messages).to include('Region is not a number')
       end
@@ -87,8 +88,8 @@ RSpec.describe BuyAddress, type: :model do
         @buy_address.valid?
         expect(@buy_address.errors.full_messages).to include('Postal code is invalid')
       end
-      it 'phone_numberが10桁以下だとの数字なら登録できない' do
-        @buy_address.phone_number = '1234567890'
+      it 'phone_numberが9桁以下だとの数字なら登録できない' do
+        @buy_address.phone_number = '123456789'
         @buy_address.valid?
         expect(@buy_address.errors.full_messages).to include('Phone number is invalid')
       end
@@ -97,6 +98,9 @@ RSpec.describe BuyAddress, type: :model do
         @buy_address.valid?
         expect(@buy_address.errors.full_messages).to include('Phone number is invalid')
       end
+      it '建物名が空でも登録できる' do
+        @buy_address.building_name = ''
+        expect(@buy_address).to be_valid
     end
   end
 end

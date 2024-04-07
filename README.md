@@ -83,7 +83,7 @@ Things you may want to cover:
 
 | Column                           | Type   | Options     |
 | ------                           | -------| -------------|
-| postal-code                      | string | null: false |
+| postal_code                      | string | null: false |
 | region_id                        | integer | null: false |
 | city                             | string | null: false |
 | house_number                     | string | null: false |

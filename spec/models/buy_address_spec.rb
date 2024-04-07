@@ -25,6 +25,10 @@ RSpec.describe BuyAddress, type: :model do
         @buy_address.phone_number = '12345678901'
         expect(@buy_address).to be_valid
       end
+      it '建物名が空でも登録できる' do
+        @buy_address.building_name = ''
+        expect(@buy_address).to be_valid
+      end
     end
 
     context '商品購入がうまくいかないとき' do
@@ -98,10 +102,11 @@ RSpec.describe BuyAddress, type: :model do
         @buy_address.valid?
         expect(@buy_address.errors.full_messages).to include('Phone number is invalid')
       end
-      it '建物名が空でも登録できる' do
-        @buy_address.building_name = ''
-        expect(@buy_address).to be_valid
-      end
+      it 'phone_numberが数字以外だと登録できない' do
+        @buy_address.phone_number = 'abc12345678'
+        @buy_address.valid?
+        expect(@buy_address.errors.full_messages).to include('Phone number is invalid')
+     end
     end
   end
 end

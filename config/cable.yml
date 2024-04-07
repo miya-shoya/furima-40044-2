@@ -1,10 +1,26 @@
+default: &default
+  encoding: utf8
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+
 development:
-  adapter: async
+  <<: *default
+  adapter: mysql2
+  username: root
+  password:
+  host: localhost
+  database: furima_40044-2_development
+
 
 test:
-  adapter: test
+  <<: *default
+  adapter: mysql2
+  username: root
+  password:
+  host: localhost
+  database: furima_40044-2_test
 
 production:
-  adapter: redis
-  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
-  channel_prefix: furima_40044_production
+  <<: *default
+  adapter: postgresql
+  url: <%= ENV['DATABASE_URL'] %>

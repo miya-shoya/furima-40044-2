@@ -76,10 +76,6 @@ group :development do
   gem 'rubocop', require: false
 end
 
-group :production do
-  gem 'pg'
-end
-
 gem 'devise'
 
 gem 'factory_bot_rails'
@@ -95,3 +91,7 @@ gem 'pry-rails'
 gem 'gon'
 
 gem 'payjp'
+
+group :production do
+  gem 'pg'
+end
